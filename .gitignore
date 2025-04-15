@@ -1,0 +1,16 @@
+# IDE
+.idea/
+.vscode/
+.swp
+
+# macos file system
+.DS_Store
+
+# Test directory
+/tst
+/temp
+
+.VSCodeCounter
+
+# Golang
+.gopath/
