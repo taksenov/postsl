@@ -1,18 +1,3 @@
-# postsl
-
-Раннер запускает, удаленные команды на серверах вашей локальной сети.
-
-## Настройки
-
-Файл `config.example.yaml` переименовать в `config.yaml`:
-
-```sh
-cp ./config.example.yaml ./config.yaml
-```
-
-Описание настроек конфигурационного файла:
-
-```yaml
 # Запускать последовательно или конкурентно
 concurency:
   use: false
@@ -55,7 +40,3 @@ command:
   params:
     - -o "StrictHostKeyChecking=accept-new"
     - -o "PreferredAuthentications=password"
-```
-
-Все параметры конфигурации можно заменить переменными окружения с спрефиксом: `POSTSL_`:
-- Например для `command.main` будет `POSTSL_COMMAND_MAIN`
