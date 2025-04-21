@@ -14,3 +14,9 @@
 
 # Golang
 .gopath/
+
+# Config
+config.yaml
+
+# Logfile
+log*.log

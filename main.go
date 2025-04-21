@@ -12,8 +12,7 @@ import (
 
 func main() {
 	root := cmd.Root()
-	root.AddCommand(cmd.GenPipe())
-	root.AddCommand(cmd.ShowStat())
+	root.AddCommand(cmd.SshRun())
 
 	if err := root.Execute(); err != nil {
 		os.Exit(1)
