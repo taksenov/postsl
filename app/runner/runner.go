@@ -50,7 +50,7 @@ func consistentlyRun(config *conf.AppConfig) {
 			} else {
 				fullOnservCommand = onServCommand.Command
 			}
-			fmt.Println("Remote Command:", fullOnservCommand)
+			fmt.Println("Remote Command:", blueMsg(fullOnservCommand))
 
 			command := fmt.Sprintf(
 				// Форматированная команда
@@ -60,7 +60,7 @@ func consistentlyRun(config *conf.AppConfig) {
 				setServerAddr(config, v),
 				fullOnservCommand,
 			)
-			fmt.Println(command)
+			fmt.Println(greenMsg(command))
 
 			cmdPatch := exec.Command(
 				"sh",
@@ -136,8 +136,8 @@ func concurrencyRun(config *conf.AppConfig) {
 				)
 
 				outputData, err := cmdPatch.Output()
-				fmt.Println(command)
-				fmt.Println("Remote Command:", fullOnservCommand)
+				fmt.Println(greenMsg(command))
+				fmt.Println("Remote Command:", blueMsg(fullOnservCommand))
 				fmt.Println("outputData:", string(outputData))
 				if err != nil {
 					fmt.Println("ERR:", err)
@@ -169,4 +169,12 @@ func setServerAddr(c *conf.AppConfig, s conf.ServerAddr) string {
 	}
 
 	return s.Name
+}
+
+func greenMsg(s string) string {
+	return string("\033[92m") + s + string("\033[0m")
+}
+
+func blueMsg(s string) string {
+	return string("\033[36m") + s + string("\033[0m")
 }
