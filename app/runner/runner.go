@@ -10,6 +10,7 @@ import (
 	"os/exec"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"time"
 
 	"devops/app/customerrors"
@@ -92,6 +93,8 @@ func concurrencyRun(config *conf.AppConfig) {
 		coeff = len(list)
 	}
 
+	var countReq int32
+
 	wg := &sync.WaitGroup{}
 	semaphoreChan := make(chan struct{}, coeff)
 
@@ -140,12 +143,14 @@ func concurrencyRun(config *conf.AppConfig) {
 					fmt.Println("ERR:", err)
 				}
 			}
+
+			atomic.AddInt32(&countReq, 1)
 		}(config)
 
 	}
 
 	wg.Wait()
-	fmt.Println("All requests done")
+	fmt.Println("All requests done. Count: ", countReq)
 }
 
 // elapsedTime -- функция-декоратор подсчитывающая время работы.
