@@ -69,7 +69,7 @@ func consistentlyRun(config *conf.AppConfig) {
 			)
 
 			outputData, err := cmdPatch.Output()
-			fmt.Println("outputData:", string(outputData))
+			fmt.Println("Output Data: \n", string(outputData))
 			if err != nil {
 				fmt.Println("ERR:", err)
 			}
@@ -138,7 +138,7 @@ func concurrencyRun(config *conf.AppConfig) {
 				outputData, err := cmdPatch.Output()
 				fmt.Println(greenMsg(command))
 				fmt.Println("Remote Command:", blueMsg(fullOnservCommand))
-				fmt.Println("outputData:", string(outputData))
+				fmt.Println("Output Data: \n", string(outputData))
 				if err != nil {
 					fmt.Println("ERR:", err)
 				}
