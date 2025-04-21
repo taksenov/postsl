@@ -59,3 +59,9 @@ command:
 
 Все параметры конфигурации можно заменить переменными окружения с спрефиксом: `POSTSL_`:
 - Например для `command.main` будет `POSTSL_COMMAND_MAIN`
+
+## Запуск
+
+```sh
+go run main.go ssh-run
+```
