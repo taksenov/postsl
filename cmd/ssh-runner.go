@@ -6,13 +6,14 @@ Copyright © 2025 taksenov@gmail.com
 package cmd
 
 import (
+	"context"
 	"devops/app/runner"
 
 	"github.com/spf13/cobra"
 )
 
 // SshRun -- sshRunCmd pseudo constructor.
-func SshRun() *cobra.Command {
+func SshRun(ctx context.Context) *cobra.Command {
 	sshRunCmd := &cobra.Command{
 		Use:   "ssh-run",
 		Short: "Запустить команду на серверах",
@@ -24,7 +25,7 @@ func SshRun() *cobra.Command {
 ` + string("\033[0m"),
 
 		Run: func(_ *cobra.Command, _ []string) {
-			runner.SshRunner()
+			runner.SshRunner(ctx)
 		},
 	}
 
