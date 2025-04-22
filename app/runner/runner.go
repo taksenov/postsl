@@ -62,13 +62,13 @@ func consistentlyRun(config *conf.AppConfig) {
 			)
 			fmt.Println(greenMsg(command))
 
-			cmdPatch := exec.Command(
+			cmdRun := exec.Command(
 				"sh",
 				"-c",
 				command,
 			)
 
-			outputData, err := cmdPatch.Output()
+			outputData, err := cmdRun.Output()
 			fmt.Println("Output Data: \n", string(outputData))
 			if err != nil {
 				fmt.Println("ERR:", err)
@@ -97,6 +97,7 @@ func concurrencyRun(config *conf.AppConfig) {
 
 	wg := &sync.WaitGroup{}
 	semaphoreChan := make(chan struct{}, coeff)
+	var outputMutex sync.Mutex
 
 	for _, v := range list {
 		wg.Add(1)
@@ -129,19 +130,22 @@ func concurrencyRun(config *conf.AppConfig) {
 					fullOnservCommand,
 				)
 
-				cmdPatch := exec.Command(
+				cmdRun := exec.Command(
 					"sh",
 					"-c",
 					command,
 				)
 
-				outputData, err := cmdPatch.Output()
+				outputData, err := cmdRun.Output()
+
+				outputMutex.Lock()
 				fmt.Println(greenMsg(command))
 				fmt.Println("Remote Command:", blueMsg(fullOnservCommand))
 				fmt.Println("Output Data: \n", string(outputData))
 				if err != nil {
 					fmt.Println("ERR:", err)
 				}
+				outputMutex.Unlock()
 			}
 
 			atomic.AddInt32(&countReq, 1)
