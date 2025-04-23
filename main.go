@@ -15,6 +15,7 @@ func main() {
 	ctx := context.Background()
 
 	root := cmd.Root()
+	root.AddCommand(cmd.VersionRun())
 	root.AddCommand(cmd.SshRun(ctx))
 
 	if err := root.Execute(); err != nil {
