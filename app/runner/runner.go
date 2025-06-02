@@ -17,10 +17,17 @@ import (
 	"devops/app/customerrors"
 	"devops/app/logger"
 	"devops/app/misc/conf"
+
+	"github.com/spf13/viper"
 )
 
 // SshRunner -- раннер выполняющий команды по ssh.
 func SshRunner(ctx context.Context) {
+	configFile := viper.GetString("conf")
+	if configFile == "" {
+		configFile = "config.yaml"
+	}
+
 	// Инициализация логгера в файл
 	log, err := logger.InitFileLogger(
 		"logs/log-"+time.Now().Format("2006-01-02--15-04-05")+".log", // путь к файлу лога
@@ -36,7 +43,7 @@ func SshRunner(ctx context.Context) {
 	// Добавляем логгер в контекст
 	ctx = logger.WithContext(ctx, log)
 
-	config, err := conf.LoadConfig("config.yaml")
+	config, err := conf.LoadConfig(configFile)
 	if err != nil {
 		log.Error("cannot load config: %s", err)
 		customerrors.HandleErr(err, "cannot load config: SshRunner()")
