@@ -87,7 +87,7 @@ func consistentlyRun(ctx context.Context, config *conf.AppConfig) {
 				// Параметры форматирующие команду
 				sshCommandParams,
 				setServerAddr(config, v),
-				fullOnservCommand,
+				quoteRemoteCmd(fullOnservCommand),
 			)
 			logInfo(ctx, "%s", greenMsg(command))
 			fmt.Println(greenMsg(command))
@@ -162,7 +162,7 @@ func concurrencyRun(ctx context.Context, config *conf.AppConfig) {
 					// Параметры форматирующие команду
 					sshCommandParams,
 					setServerAddr(c, v),
-					fullOnservCommand,
+					quoteRemoteCmd(fullOnservCommand),
 				)
 
 				cmdRun := exec.Command(
@@ -214,6 +214,13 @@ func setServerAddr(c *conf.AppConfig, s conf.ServerAddr) string {
 	}
 
 	return s.Name
+}
+
+// quoteRemoteCmd -- оборачивает удалённую команду в одинарные кавычки, чтобы
+// локальный shell не разбирал составную команду (; | && > и т.п.) и передал
+// её ssh целиком для выполнения на удалённом хосте.
+func quoteRemoteCmd(s string) string {
+	return "'" + strings.ReplaceAll(s, "'", `'\''`) + "'"
 }
 
 func greenMsg(s string) string {
