@@ -2,7 +2,7 @@
 APP_NAME := postsl
 
 # Версия приложения
-VERSION := 0.2.0
+VERSION := 0.2.1
 
 # Целевые ОС
 OS_LIST := linux darwin freebsd
